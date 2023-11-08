@@ -43,7 +43,7 @@ const Home = () => {
 
   return (
     <div className='container'>
-      <h1 className='mt-5'>User Table</h1>
+      <h1 className='mt-5'>Users Table</h1>
       <Link href='/add-user'>
         <Button variant='primary' className='my-3'>
           Add User

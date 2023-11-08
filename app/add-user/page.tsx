@@ -17,13 +17,13 @@ const AddUser = () => {
     date_of_birth: '',
   };
 
-  const handleSubmit = async (values: UserInterface) => {
+  const handleSubmit = async (data: UserInterface) => {
     try {
-      await addUser(values);
+      await addUser(data);
 
       Swal.fire({
         icon: 'success',
-        title: 'Your work has been saved',
+        title: 'Successfully created new user',
         showConfirmButton: false,
         timer: 1500,
       });
@@ -35,13 +35,19 @@ const AddUser = () => {
         const axiosError = error as AxiosError<ErrorResponse>;
         if (axiosError.response?.status === 400) {
           const errorData = axiosError.response.data;
-          const errorMessages = Object.values(errorData).join('\n');
+          const errorMessages = Object.values(errorData).join('<br>');
           Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: errorMessages,
+            html: errorMessages,
           });
         }
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Something went wrong. Please try again later.',
+        });
       }
     }
   };
