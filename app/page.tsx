@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import UserTable from '@/components/Table';
 import Link from 'next/link';
-import { deleteUser, getAllUsers } from './api';
+import { deleteUser, getAllUsers } from '../services/userService';
 import { Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 

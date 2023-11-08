@@ -1,11 +1,11 @@
 'use client';
 
 import FormComponent from '@/components/form/Form';
-import UserInterface from '@/models/userModel';
 import axios, { AxiosError } from 'axios';
-import { addUser } from '../api';
+import { addUser } from '../../services/userService';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
+import UserRequest from '@/models/userModel';
 
 const AddUser = () => {
   const router = useRouter();
@@ -17,7 +17,7 @@ const AddUser = () => {
     date_of_birth: '',
   };
 
-  const handleSubmit = async (data: UserInterface) => {
+  const handleSubmit = async (data: UserRequest) => {
     try {
       await addUser(data);
 
@@ -53,10 +53,11 @@ const AddUser = () => {
   };
 
   return (
-    <div className='container card mt-5 col-md-6'>
-      <h1 className='my-5'>Add User</h1>
-      <FormComponent initialValues={initialValues} onSubmit={handleSubmit} />
-    </div>
+    <FormComponent
+      type='Create New'
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+    />
   );
 };
 

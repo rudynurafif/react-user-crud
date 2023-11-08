@@ -19,9 +19,10 @@ interface UserFormProps {
     date_of_birth: string;
   };
   onSubmit: (values: any) => void;
+  type: string;
 }
 
-const UserForm: React.FC<UserFormProps> = ({ initialValues, onSubmit }) => {
+const UserForm: React.FC<UserFormProps> = ({ initialValues, onSubmit, type }) => {
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('*Name is required'),
     identity_number: Yup.string()
@@ -43,78 +44,82 @@ const UserForm: React.FC<UserFormProps> = ({ initialValues, onSubmit }) => {
   });
 
   return (
-    <BootstrapForm onSubmit={formik.handleSubmit}>
-      <FormGroup>
-        <FormLabel className='my-3'>Name</FormLabel>
-        <FormControl
-          type='text'
-          name='name'
-          onChange={formik.handleChange}
-          value={formik.values.name}
-          onBlur={formik.handleBlur}
-        />
-        {/* Display validation error message */}
-        {formik.touched.name && formik.errors.name && (
-          <div className='text-danger'>{formik.errors.name}</div>
-        )}
-      </FormGroup>
-      <FormGroup className='my-3'>
-        <FormLabel>Identity Number</FormLabel>
-        <FormControl
-          type='text'
-          name='identity_number'
-          onChange={formik.handleChange}
-          value={formik.values.identity_number}
-          onBlur={formik.handleBlur}
-        />
-        {formik.touched.identity_number && formik.errors.identity_number && (
-          <div className='text-danger'>{formik.errors.identity_number}</div>
-        )}
-      </FormGroup>
-      <FormGroup className='my-3'>
-        <FormLabel>Email</FormLabel>
-        <FormControl
-          type='email'
-          name='email'
-          onChange={formik.handleChange}
-          value={formik.values.email}
-          onBlur={formik.handleBlur}
-        />
-        {formik.touched.email && formik.errors.email && (
-          <div className='text-danger'>{formik.errors.email}</div>
-        )}
-      </FormGroup>
-      <FormGroup className='my-3'>
-        <FormLabel>Date of Birth</FormLabel>
-        <FormControl
-          type='date'
-          name='date_of_birth'
-          onChange={formik.handleChange}
-          value={formik.values.date_of_birth}
-          onBlur={formik.handleBlur}
-        />
-        {formik.touched.date_of_birth && formik.errors.date_of_birth && (
-          <div className='text-danger'>{formik.errors.date_of_birth}</div>
-        )}
-      </FormGroup>
-      <Button
-        type='submit'
-        variant='primary'
-        className='my-3'
-        disabled={
-          formik.isSubmitting ||
-          !formik.isValid ||
-          Object.keys(formik.touched).length === 0
-        }
-      >
-        Submit
-      </Button>
-      <Link href='/'>
-        <Button type='button' variant='danger' className='m-3 disabled-button'>
-          Cancel
+    <section className='container card mt-5 col-md-6'>
+      <h1 className='my-5'>{type} User</h1>
+
+      <BootstrapForm onSubmit={formik.handleSubmit}>
+        <FormGroup>
+          <FormLabel className='my-3'>Name</FormLabel>
+          <FormControl
+            type='text'
+            name='name'
+            onChange={formik.handleChange}
+            value={formik.values.name}
+            onBlur={formik.handleBlur}
+          />
+          {/* Display validation error message */}
+          {formik.touched.name && formik.errors.name && (
+            <div className='text-danger'>{formik.errors.name}</div>
+          )}
+        </FormGroup>
+        <FormGroup className='my-3'>
+          <FormLabel>Identity Number</FormLabel>
+          <FormControl
+            type='text'
+            name='identity_number'
+            onChange={formik.handleChange}
+            value={formik.values.identity_number}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.identity_number && formik.errors.identity_number && (
+            <div className='text-danger'>{formik.errors.identity_number}</div>
+          )}
+        </FormGroup>
+        <FormGroup className='my-3'>
+          <FormLabel>Email</FormLabel>
+          <FormControl
+            type='email'
+            name='email'
+            onChange={formik.handleChange}
+            value={formik.values.email}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.email && formik.errors.email && (
+            <div className='text-danger'>{formik.errors.email}</div>
+          )}
+        </FormGroup>
+        <FormGroup className='my-3'>
+          <FormLabel>Date of Birth</FormLabel>
+          <FormControl
+            type='date'
+            name='date_of_birth'
+            onChange={formik.handleChange}
+            value={formik.values.date_of_birth}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.date_of_birth && formik.errors.date_of_birth && (
+            <div className='text-danger'>{formik.errors.date_of_birth}</div>
+          )}
+        </FormGroup>
+        <Button
+          type='submit'
+          variant='primary'
+          className='my-3'
+          disabled={
+            formik.isSubmitting ||
+            !formik.isValid ||
+            Object.keys(formik.touched).length === 0
+          }
+        >
+          Submit
         </Button>
-      </Link>
-    </BootstrapForm>
+        <Link href='/'>
+          <Button type='button' variant='danger' className='m-3 disabled-button'>
+            Cancel
+          </Button>
+        </Link>
+      </BootstrapForm>
+    </section>
   );
 };
 

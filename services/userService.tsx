@@ -1,4 +1,4 @@
-import UserInterface from '@/models/userModel';
+import UserDataInterface from '@/models/userModel';
 import axios from 'axios';
 
 const api = axios.create({
@@ -10,13 +10,8 @@ export const getAllUsers = async () => {
   return response.data;
 };
 
-export const addUser = async (userData: UserInterface) => {
+export const addUser = async (userData: UserDataInterface) => {
   const response = await api.post('', userData);
-  return response.data;
-};
-
-export const editUser = async (userId: number, userData: UserInterface) => {
-  const response = await api.put(`/${userId}`, userData);
   return response.data;
 };
 

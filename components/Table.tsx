@@ -1,13 +1,6 @@
+import { User } from '@/models/userModel';
 import React from 'react';
 import { Table, Button } from 'react-bootstrap';
-
-interface User {
-  id: number;
-  name: string;
-  identity_number: string;
-  email: string;
-  date_of_birth: string;
-}
 
 interface UserTableProps {
   users: User[];
