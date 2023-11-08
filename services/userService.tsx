@@ -1,4 +1,4 @@
-import UserDataInterface from '@/models/userModel';
+import { UserRequest } from '@/models/userModel';
 import axios from 'axios';
 
 const api = axios.create({
@@ -10,7 +10,7 @@ export const getAllUsers = async () => {
   return response.data;
 };
 
-export const addUser = async (userData: UserDataInterface) => {
+export const addUser = async (userData: UserRequest) => {
   const response = await api.post('', userData);
   return response.data;
 };

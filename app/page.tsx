@@ -9,10 +9,13 @@ import Swal from 'sweetalert2';
 
 const Home = () => {
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
+    setLoading(true);
     const userData = await getAllUsers();
     setUsers(userData.users);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -43,13 +46,13 @@ const Home = () => {
 
   return (
     <div className='container'>
-      <h1 className='mt-5'>Users Table</h1>
+      <h1 className='mt-5'>Simple User App</h1>
       <Link href='/add-user'>
         <Button variant='primary' className='my-3'>
           Add User
         </Button>
       </Link>
-      <UserTable users={users} onDelete={handleDelete} />
+      <UserTable users={users} onDelete={handleDelete} loading={loading} />
     </div>
   );
 };

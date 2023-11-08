@@ -5,9 +5,10 @@ import { Table, Button } from 'react-bootstrap';
 interface UserTableProps {
   users: User[];
   onDelete: (id: number) => void;
+  loading: boolean;
 }
 
-const UserTable: React.FC<UserTableProps> = ({ users, onDelete }) => {
+const UserTable: React.FC<UserTableProps> = ({ users, onDelete, loading }) => {
   return (
     <Table striped bordered hover>
       <thead>
@@ -20,23 +21,30 @@ const UserTable: React.FC<UserTableProps> = ({ users, onDelete }) => {
         </tr>
       </thead>
       <tbody>
-        {users.map((user) => (
-          <tr key={user.id}>
-            <td>{user.name}</td>
-            <td>{user.identity_number}</td>
-            <td>{user.email}</td>
-            <td>{user.date_of_birth}</td>
-            <td>
-              <Button variant="danger" onClick={() => onDelete(user.id)}>
-                Delete
-              </Button>
+        {loading ? (
+          <tr>
+            <td colSpan={5} className='text-center'>
+              Loading...
             </td>
           </tr>
-        ))}
+        ) : (
+          users.map((user) => (
+            <tr key={user.id}>
+              <td>{user.name}</td>
+              <td>{user.identity_number}</td>
+              <td>{user.email}</td>
+              <td>{user.date_of_birth}</td>
+              <td className='d-flex justify-content-center align-items-center'>
+                <Button variant='danger' onClick={() => onDelete(user.id)}>
+                  Delete
+                </Button>
+              </td>
+            </tr>
+          ))
+        )}
       </tbody>
     </Table>
   );
 };
 
 export default UserTable;
-
