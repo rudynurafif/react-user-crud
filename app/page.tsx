@@ -45,7 +45,7 @@ const Home = () => {
   };
 
   return (
-    <div className='container'>
+    <div className='container col-sm-12'>
       <h1 className='mt-5'>Simple User App</h1>
       <Link href='/add-user'>
         <Button variant='primary' className='my-3'>

@@ -1,11 +1,11 @@
 'use client';
 
 import FormComponent from '@/components/form/Form';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { addUser } from '../../services/userService';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
-import UserRequest from '@/models/userModel';
+import { UserRequest } from '@/models/userModel';
 
 const AddUser = () => {
   const router = useRouter();
@@ -31,17 +31,14 @@ const AddUser = () => {
         router.push('/');
       }, 1500);
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError<ErrorResponse>;
-        if (axiosError.response?.status === 400) {
-          const errorData = axiosError.response.data;
-          const errorMessages = Object.values(errorData).join('<br>');
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            html: errorMessages,
-          });
-        }
+      if (axios.isAxiosError(error) && error.response?.status === 400) {
+        const errorMessages = Object.values(error.response.data).join('<br>');
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          html: errorMessages,
+        });
       } else {
         Swal.fire({
           icon: 'error',
@@ -54,7 +51,7 @@ const AddUser = () => {
 
   return (
     <FormComponent
-      type='Create New'
+      type='Create'
       initialValues={initialValues}
       onSubmit={handleSubmit}
     />

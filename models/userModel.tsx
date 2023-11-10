@@ -12,3 +12,20 @@ export interface User {
   email: string;
   date_of_birth: string;
 }
+
+export interface UserFormProps {
+  initialValues: {
+    name: string;
+    identity_number: string;
+    email: string;
+    date_of_birth: string;
+  };
+  onSubmit: (values: any) => void;
+  type: string;
+}
+
+export interface UserTableProps {
+  users: User[];
+  onDelete: (id: number) => void;
+  loading: boolean;
+}

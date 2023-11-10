@@ -1,26 +1,10 @@
 'use client';
 
-import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import {
-  Button,
-  Form as BootstrapForm,
-  FormGroup,
-  FormLabel,
-  FormControl,
-} from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import Link from 'next/link';
-
-interface UserFormProps {
-  initialValues: {
-    name: string;
-    identity_number: string;
-    email: string;
-    date_of_birth: string;
-  };
-  onSubmit: (values: any) => void;
-  type: string;
-}
+import { useFormik } from 'formik';
+import { UserFormProps } from '@/models/userModel';
 
 const UserForm: React.FC<UserFormProps> = ({ initialValues, onSubmit, type }) => {
   const validationSchema = Yup.object().shape({
@@ -30,7 +14,10 @@ const UserForm: React.FC<UserFormProps> = ({ initialValues, onSubmit, type }) =>
       .length(10, '*Identity Number must be 10 characters'),
     email: Yup.string().email('*Invalid email format').required('*Email is required'),
     date_of_birth: Yup.date()
-      .max(new Date(), "*Date of Birth cannot exceed today's date")
+      .max(
+        new Date(new Date().setDate(new Date().getDate() - 1)),
+        "*Date of Birth cannot be today or exceed today's date."
+      )
       .required('*Date of Birth is required'),
   });
 
@@ -45,52 +32,56 @@ const UserForm: React.FC<UserFormProps> = ({ initialValues, onSubmit, type }) =>
 
   return (
     <section className='container card mt-5 col-md-6'>
-      <h1 className='my-5'>{type} User</h1>
+      <h1 className='my-5'>{type} User Form</h1>
 
-      <BootstrapForm onSubmit={formik.handleSubmit}>
-        <FormGroup>
-          <FormLabel className='my-3'>Name</FormLabel>
-          <FormControl
+      <Form onSubmit={formik.handleSubmit}>
+        <Form.Group>
+          <Form.Label className='my-3'>Name</Form.Label>
+          <Form.Control
             type='text'
             name='name'
             onChange={formik.handleChange}
             value={formik.values.name}
             onBlur={formik.handleBlur}
+            placeholder='Input user name..'
           />
-          {/* Display validation error message */}
           {formik.touched.name && formik.errors.name && (
             <div className='text-danger'>{formik.errors.name}</div>
           )}
-        </FormGroup>
-        <FormGroup className='my-3'>
-          <FormLabel>Identity Number</FormLabel>
-          <FormControl
+        </Form.Group>
+        <Form.Group className='my-3'>
+          <Form.Label>Identity Number</Form.Label>
+          <Form.Control
             type='text'
             name='identity_number'
             onChange={formik.handleChange}
             value={formik.values.identity_number}
             onBlur={formik.handleBlur}
+            placeholder='Input user identity number..'
           />
           {formik.touched.identity_number && formik.errors.identity_number && (
             <div className='text-danger'>{formik.errors.identity_number}</div>
           )}
-        </FormGroup>
-        <FormGroup className='my-3'>
-          <FormLabel>Email</FormLabel>
-          <FormControl
+          <Form.Text className='text-muted'>10 characters length</Form.Text>
+        </Form.Group>
+        <Form.Group className='my-3'>
+          <Form.Label>Email Address</Form.Label>
+          <Form.Control
             type='email'
             name='email'
             onChange={formik.handleChange}
             value={formik.values.email}
             onBlur={formik.handleBlur}
+            placeholder='Input user email..'
           />
           {formik.touched.email && formik.errors.email && (
             <div className='text-danger'>{formik.errors.email}</div>
           )}
-        </FormGroup>
-        <FormGroup className='my-3'>
-          <FormLabel>Date of Birth</FormLabel>
-          <FormControl
+          <Form.Text className='text-muted'>Example: name@email.com</Form.Text>
+        </Form.Group>
+        <Form.Group className='my-3'>
+          <Form.Label>Date of Birth</Form.Label>
+          <Form.Control
             type='date'
             name='date_of_birth'
             onChange={formik.handleChange}
@@ -100,7 +91,7 @@ const UserForm: React.FC<UserFormProps> = ({ initialValues, onSubmit, type }) =>
           {formik.touched.date_of_birth && formik.errors.date_of_birth && (
             <div className='text-danger'>{formik.errors.date_of_birth}</div>
           )}
-        </FormGroup>
+        </Form.Group>
         <Button
           type='submit'
           variant='primary'
@@ -114,11 +105,11 @@ const UserForm: React.FC<UserFormProps> = ({ initialValues, onSubmit, type }) =>
           Submit
         </Button>
         <Link href='/'>
-          <Button type='button' variant='danger' className='m-3 disabled-button'>
+          <Button type='button' variant='danger' className='m-3'>
             Cancel
           </Button>
         </Link>
-      </BootstrapForm>
+      </Form>
     </section>
   );
 };
