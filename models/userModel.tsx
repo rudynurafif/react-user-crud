@@ -20,7 +20,7 @@ export interface UserFormProps {
     email: string;
     date_of_birth: string;
   };
-  onSubmit: (values: any) => void;
+  onSubmitForm: (values: any) => void;
   type: string;
 }
 

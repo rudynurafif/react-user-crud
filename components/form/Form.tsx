@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useFormik } from 'formik';
 import { UserFormProps } from '@/models/userModel';
 
-const UserForm: React.FC<UserFormProps> = ({ initialValues, onSubmit, type }) => {
+const UserForm: React.FC<UserFormProps> = ({ initialValues, onSubmitForm, type }) => {
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('*Name is required'),
     identity_number: Yup.string()
@@ -25,7 +25,7 @@ const UserForm: React.FC<UserFormProps> = ({ initialValues, onSubmit, type }) =>
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: (values, actions) => {
-      onSubmit(values);
+      onSubmitForm(values);
       actions.setSubmitting(false);
     },
   });

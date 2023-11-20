@@ -1,6 +1,6 @@
 'use client';
 
-import FormComponent from '@/components/form/Form';
+import UserForm from '@/components/form/Form';
 import axios from 'axios';
 import { addUser } from '../../services/userService';
 import { useRouter } from 'next/navigation';
@@ -50,10 +50,10 @@ const AddUser = () => {
   };
 
   return (
-    <FormComponent
+    <UserForm
       type='Create'
       initialValues={initialValues}
-      onSubmit={handleSubmit}
+      onSubmitForm={handleSubmit}
     />
   );
 };
